@@ -25,12 +25,10 @@ public class FirseActivity extends AppCompatActivity {
         ImageView logoImageView = findViewById(R.id.img_logo);
         ViewGroup container = findViewById(R.id.container);
 
+        //設定計時器
         new CountDownTimer(4000, 1000) {
-
             public void onTick(long millisUntilFinished) {
-
             }
-
             public void onFinish() {
                 finish();
             }
