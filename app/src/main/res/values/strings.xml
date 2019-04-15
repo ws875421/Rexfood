@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SeekFood</string>
+    <string name="message_alert">嗯～真的要離開了嗎？</string>
+    <string name="text_btExit">閃人</string>
+    <string name="text_btYes">對！</string>
+    <string name="text_btNo">還沒…</string>
+
 </resources>
