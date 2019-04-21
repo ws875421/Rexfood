@@ -1,4 +1,5 @@
-package div.rex.seekfood;
+package div.rex.seekfood.main;
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +14,7 @@ public class Util {
 //    public static String URL = "http://192.168.1.92:8081/BookStoreWeb/";
     public static String URL = "http://172.20.10.3:8081/CA107G3phone/";
 //    public static String URL = "http://192.168.1.92:8081/CA107G3phone/";
+
 
 
     // 偏好設定檔案名稱
@@ -51,5 +53,6 @@ public class Util {
 //                MODE_PRIVATE);
 //        boolean login = preferences.getBoolean("login", false);
 
-}
 
+
+}

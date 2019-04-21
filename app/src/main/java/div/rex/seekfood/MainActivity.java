@@ -5,12 +5,24 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -20,12 +32,44 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
+import div.rex.seekfood.member.MemberLogin;
+import div.rex.seekfood.task.ImageTask;
 
+
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+    private final static String TAG = "fragment";
+
+    private TextView mTextMessage;
     private Banner mBanner;
     private ArrayList<String> images;
     private ArrayList<String> imageTitle;
+    private TextView tvMember, tvMoney;
+    private ImageView ivmember;
+    private ImageTask bookImageTask;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_dashboard:
+                    mTextMessage.setText(R.string.title_dashboard);
+                    return true;
+                case R.id.navigation_notifications:
+                    mTextMessage.setText(R.string.title_notifications);
+
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +77,72 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = new Intent(MainActivity.this, FirseActivity.class);
         startActivity(intent);
-        mBanner = findViewById(R.id.banner);
 
+        //
+
+        mBanner = findViewById(R.id.banner);
         //初始化数据
         initData();
         //初始化view
         initView();
 
+        //
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        String title = "Dynamic_Fragment B";
+        DynamicFragment fragmentB = new DynamicFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        fragmentB.setArguments(bundle);
+
+        transaction.replace(R.id.frameLayout, fragmentB, TAG);
+        transaction.commit();
+        //
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        // 讓Drawer開關出現三條線
+        toggle.syncState();
+
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+//
+//        //判斷是否登入 & 登入廠商 OR 會員
+//        navigationView.getMenu().clear();
+//        SharedPreferences preferences = getSharedPreferences(
+//                Util.PREF_FILE, MODE_PRIVATE);
+//        boolean islogin = preferences.getBoolean("login", false);
+//        if (!islogin) {
+//            navigationView.inflateMenu(R.menu.activity_main_drawer);
+//        } else if (islogin) {
+//            navigationView.inflateMenu(R.menu.activity_main_login);
+//        }
+
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        //######
+        mTextMessage = findViewById(R.id.message);
+        mTextMessage.setText(R.string.title_home);
+
+        tvMember = findViewById(R.id.tvMember);
+        tvMoney = findViewById(R.id.tvMoney);
+
     }
 
+
+    /**
+     * 网络加载图片
+     * 使用了Glide图片加载框架
+     */
     private void initView() {
         mBanner = findViewById(R.id.banner);
         //设置样式,默认为:Banner.NOT_INDICATOR(不显示指示器和标题)
@@ -102,10 +203,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 网络加载图片
-     * 使用了Glide图片加载框架
-     */
     public class GlideImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
@@ -116,26 +213,141 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * End
+     */
+
+
     @Override
-    protected void onResume() {
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_camera://登入
+                Intent intent = new Intent(MainActivity.this, MemberLogin.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_gallery:
+                // 切換Fragment或是Activity
+                break;
+            case R.id.nav_manage:
+                break;
+            case R.id.nav_share:
+                break;
+            case R.id.nav_send://登出
+                SharedPreferences preferences = getSharedPreferences(
+                        Util.PREF_FILE, MODE_PRIVATE);
+
+                preferences.edit()
+                        .putBoolean("login", false)
+                        .putString("mem_no", " ")
+                        .putString("member_accout", " ")
+                        .putString("mem_balance", " ")
+
+                        .apply();
+
+
+                NavigationView navigationView = findViewById(R.id.nav_view);
+
+                //清除資料
+                navigationView.getMenu().clear();
+                tvMember = findViewById(R.id.tvMember);
+                tvMoney = findViewById(R.id.tvMoney);
+                ivmember = findViewById(R.id.ivmember);
+
+                tvMember.setText("先生/小姐");
+                tvMoney.setText("餘額:");
+                ivmember.setImageResource(R.drawable.baseline);
+                navigationView.inflateMenu(R.menu.activity_main_drawer);
+                break;
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
+    //畫面返回
+    @Override
+    public void onResume() {
         super.onResume();
+//showToast(this, "1");
+
+        //判斷是否登入 & 登入廠商 OR 會員
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.getMenu().clear();
+        SharedPreferences preferences = getSharedPreferences(
+                Util.PREF_FILE, MODE_PRIVATE);
+        boolean islogin = preferences.getBoolean("login", false);
+        if (!islogin) {
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
+            try {
+//showToast(this, "2");
+                tvMember = findViewById(R.id.tvMember);
+                tvMoney = findViewById(R.id.tvMoney);
+                ivmember = findViewById(R.id.ivmember);
+
+                tvMember.setText("先生/小姐");
+                tvMoney.setText("餘額:");
+                ivmember.setImageResource(R.drawable.baseline);
+            } catch (NullPointerException e) {
+                return;
+            }
+
+        } else {
+            navigationView.inflateMenu(R.menu.activity_main_login);
+            String mem_name = preferences.getString("mem_name", " ");
+            String mem_balance = preferences.getString("mem_balance", " ");
+            String url = Util.URL + "member/member.do";
+            String mem_no = preferences.getString("mem_no", " ");
+            int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
+            Bitmap bitmap = null;
+            try {
+                tvMember = findViewById(R.id.tvMember);
+                tvMoney = findViewById(R.id.tvMoney);
+                ivmember = findViewById(R.id.ivmember);
+                tvMember.setText(mem_name + "   先生/小姐");
+                tvMoney.setText("餘額:" + mem_balance + "   元");
+
+                //會員頭像
+                bookImageTask = new ImageTask(url, mem_no, imageSize);
+
+                bitmap = bookImageTask.execute().get();
+
+            } catch (ExecutionException e) {
+                Log.e(TAG, e.toString());
+            } catch (InterruptedException e) {
+                Log.e(TAG, e.toString());
+            } catch (NullPointerException e) {
+                Log.e(TAG, e.toString());
+                return;
+            }
+
+            if (bitmap != null) {
+                ivmember.setImageBitmap(bitmap);
+            } else {
+                ivmember.setImageResource(R.drawable.default_image);
+            }
+
+
+        }
+
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-
-    //##  離開上一頁設定
+    /**
+     * 離開上一頁設定
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -147,7 +359,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class AlertFragment extends DialogFragment implements DialogInterface.OnClickListener {
-        //離開上一頁設定
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
