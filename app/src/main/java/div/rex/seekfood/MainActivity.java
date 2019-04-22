@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("title", title);
         fragmentB.setArguments(bundle);
 
-        transaction.replace(R.id.frameLayout, fragmentB, TAG);
+        transaction.replace(R.id.framLayout, fragmentB, TAG);
         transaction.commit();
         //
 
@@ -363,8 +363,8 @@ public class MainActivity extends AppCompatActivity
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                     //設定圖示
-                    .setIcon(R.drawable.alert)
-                    .setTitle("This is Dialog")
+//                    .setIcon(R.drawable.alert)
+//                    .setTitle("This is Dialog")
                     //設定訊息內容
                     .setMessage(R.string.message_alert)
                     //設定確認鍵 (positive用於確認)
