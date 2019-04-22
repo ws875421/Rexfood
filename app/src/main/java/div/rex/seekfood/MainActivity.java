@@ -39,9 +39,6 @@ import div.rex.seekfood.task.ImageTask;
 import div.rex.seekfood.vendor.VendorLogin;
 
 
-
-
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = "fragment";
@@ -316,6 +313,7 @@ public class MainActivity extends AppCompatActivity
         boolean islogin = preferences.getBoolean("login", false);
         String mem_no = preferences.getString("mem_no", "");
         String vendor_no = preferences.getString("vendor_no", "");
+        Bitmap bitmap = null;
 
         if (!islogin) {
             navigationView.inflateMenu(R.menu.activity_main_drawer);
@@ -337,11 +335,11 @@ public class MainActivity extends AppCompatActivity
             String mem_balance = preferences.getString("mem_balance", " ");
             String url = Util.URL + "member/member.do";
             int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
-            Bitmap bitmap = null;
             try {
                 tvLogName = findViewById(R.id.tvLogName);
                 tvLogDetal = findViewById(R.id.tvLogDetal);
                 ivmember = findViewById(R.id.ivmember);
+
                 tvLogName.setText(mem_name + "   先生/小姐");
                 tvLogDetal.setText("餘額:" + mem_balance + "   元");
 
@@ -349,6 +347,11 @@ public class MainActivity extends AppCompatActivity
                 memberImageTask = new ImageTask(url, "mem_no", mem_no, imageSize);
 
                 bitmap = memberImageTask.execute().get();
+                if (bitmap != null) {
+                    ivmember.setImageBitmap(bitmap);
+                } else {
+                    ivmember.setImageResource(R.drawable.default_image);
+                }
 
             } catch (ExecutionException e) {
                 Log.e(TAG, e.toString());
@@ -357,12 +360,6 @@ public class MainActivity extends AppCompatActivity
             } catch (NullPointerException e) {
                 Log.e(TAG, e.toString());
                 return;
-            }
-
-            if (bitmap != null) {
-                ivmember.setImageBitmap(bitmap);
-            } else {
-                ivmember.setImageResource(R.drawable.default_image);
             }
 
 
@@ -373,10 +370,10 @@ public class MainActivity extends AppCompatActivity
             String v_type = preferences.getString("v_type", " ");
             String url = Util.URL + "vendor/vendor.do";
             int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
-            Bitmap bitmap = null;
             try {
                 tvLogName = findViewById(R.id.tvLogName);
                 tvLogDetal = findViewById(R.id.tvLogDetal);
+                ivmember = findViewById(R.id.ivmember);
 
                 tvLogName.setText("店名 :" + v_name);
                 tvLogDetal.setText("餐廳類型: " + v_type);
@@ -384,6 +381,11 @@ public class MainActivity extends AppCompatActivity
                 //廠商頭像
                 memberImageTask = new ImageTask(url, "vendor_no", vendor_no, imageSize);
                 bitmap = memberImageTask.execute().get();
+                if (bitmap != null) {
+                    ivmember.setImageBitmap(bitmap);
+                } else {
+                    ivmember.setImageResource(R.drawable.default_image);
+                }
 
             } catch (ExecutionException e) {
                 Log.e(TAG, e.toString());
@@ -394,11 +396,7 @@ public class MainActivity extends AppCompatActivity
                 return;
             }
 
-            if (bitmap != null) {
-                ivmember.setImageBitmap(bitmap);
-            } else {
-                ivmember.setImageResource(R.drawable.default_image);
-            }
+
         }
     }
 
