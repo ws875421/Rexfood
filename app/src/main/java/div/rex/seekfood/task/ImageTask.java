@@ -22,8 +22,9 @@ import div.rex.seekfood.R;
 
 public class ImageTask extends AsyncTask<Object, Integer, Bitmap> {
     private final static String TAG = "ImageTask";
-    private String url, mem_no;
+    private String url;
     private int imageSize;
+    private String key, valus;
     /* ImageTask的屬性strong reference到BookListAdapter內的imageView不好，
      * 會導致BookListAdapter進入背景時imageView被參考到而無法被釋放，
      * 而且imageView會參考到Context，也會導致Activity無法被回收。
@@ -31,23 +32,31 @@ public class ImageTask extends AsyncTask<Object, Integer, Bitmap> {
      */
     private WeakReference<ImageView> imageViewWeakReference;
 
-    public ImageTask(String url, String mem_no, int imageSize) {
-        this(url, mem_no, imageSize, null);
+    public ImageTask(String url, String key, String valus, int imageSize) {
+        this(url, key, valus, imageSize, null);
     }
 
-    public ImageTask(String url, String mem_no, int imageSize, ImageView imageView) {
+    public ImageTask(String url, String key, String valus, int imageSize, ImageView imageView) {
         this.url = url;
-        this.mem_no = mem_no;
+        this.key = key;
+        this.valus = valus;
         this.imageSize = imageSize;
         this.imageViewWeakReference = new WeakReference<>(imageView);
     }
 
+    public String setPropertyKey(String key) {
+        return key;
+    }
+
+    public String setPropertyValue(String value) {
+        return value;
+    }
 
     @Override
     protected Bitmap doInBackground(Object... objects) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", "getImage");
-        jsonObject.addProperty("mem_no", mem_no);
+        jsonObject.addProperty(key, valus);
         jsonObject.addProperty("imageSize", imageSize);
         return getRemoteImage(url, jsonObject.toString());
     }

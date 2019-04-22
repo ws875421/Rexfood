@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_notice"
             android:icon="@drawable/notification"
             android:title="通知" />
         <item
@@ -14,7 +14,7 @@
             android:icon="@drawable/document"
             android:title="查詢訂單" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_like"
             android:icon="@drawable/heart"
             android:title="收藏" />
 
@@ -24,7 +24,7 @@
             android:title="好友聊天" />
 
         <item
-            android:id="@+id/wpos"
+            android:id="@+id/nav_wpos"
             android:icon="@drawable/knife"
             android:title="候位查詢" />
     </group>
@@ -33,7 +33,7 @@
         <menu>
 
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_memberOut"
                 android:icon="@drawable/ic_menu_send"
                 android:title="登出" />
         </menu>

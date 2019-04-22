@@ -36,6 +36,10 @@ import java.util.concurrent.ExecutionException;
 
 import div.rex.seekfood.member.MemberLogin;
 import div.rex.seekfood.task.ImageTask;
+import div.rex.seekfood.vendor.VendorLogin;
+
+
+
 
 
 public class MainActivity extends AppCompatActivity
@@ -46,9 +50,9 @@ public class MainActivity extends AppCompatActivity
     private Banner mBanner;
     private ArrayList<String> images;
     private ArrayList<String> imageTitle;
-    private TextView tvMember, tvMoney;
+    private TextView tvLogName, tvLogDetal;
     private ImageView ivmember;
-    private ImageTask bookImageTask;
+    private ImageTask memberImageTask;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,10 +81,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Intent intent = new Intent(MainActivity.this, FirseActivity.class);
         startActivity(intent);
+        findView();
 
-        //
-
-        mBanner = findViewById(R.id.banner);
         //初始化数据
         initData();
         //初始化view
@@ -111,19 +113,6 @@ public class MainActivity extends AppCompatActivity
 
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-//
-//        //判斷是否登入 & 登入廠商 OR 會員
-//        navigationView.getMenu().clear();
-//        SharedPreferences preferences = getSharedPreferences(
-//                Util.PREF_FILE, MODE_PRIVATE);
-//        boolean islogin = preferences.getBoolean("login", false);
-//        if (!islogin) {
-//            navigationView.inflateMenu(R.menu.activity_main_drawer);
-//        } else if (islogin) {
-//            navigationView.inflateMenu(R.menu.activity_main_login);
-//        }
-
-
         navigationView.setNavigationItemSelectedListener(this);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -132,10 +121,14 @@ public class MainActivity extends AppCompatActivity
         //######
         mTextMessage = findViewById(R.id.message);
         mTextMessage.setText(R.string.title_home);
+    }
 
-        tvMember = findViewById(R.id.tvMember);
-        tvMoney = findViewById(R.id.tvMoney);
 
+    private void findView() {
+        mBanner = findViewById(R.id.banner);
+        mTextMessage = findViewById(R.id.message);
+        tvLogName = findViewById(R.id.tvLogName);
+        tvLogDetal = findViewById(R.id.tvLogDetal);
     }
 
 
@@ -230,43 +223,77 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
+        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         switch (item.getItemId()) {
-            case R.id.nav_camera://登入
+            case R.id.nav_member://會員登入
                 Intent intent = new Intent(MainActivity.this, MemberLogin.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_gallery:
-                // 切換Fragment或是Activity
-                break;
-            case R.id.nav_manage:
-                break;
-            case R.id.nav_share:
-                break;
-            case R.id.nav_send://登出
-                SharedPreferences preferences = getSharedPreferences(
-                        Util.PREF_FILE, MODE_PRIVATE);
+            case R.id.nav_memberOut://會員登出
 
                 preferences.edit()
                         .putBoolean("login", false)
                         .putString("mem_no", " ")
+                        .putString("mem_name", " ")
                         .putString("member_accout", " ")
+                        .putString("mem_gender", " ")
+                        .putString("mem_mail", " ")
+                        .putString("mem_id", " ")
+                        .putString("mem_tel", " ")
+                        .putString("mem_status", " ")
                         .putString("mem_balance", " ")
-
+                        .putString("mem_nickname", " ")
                         .apply();
 
-
-                NavigationView navigationView = findViewById(R.id.nav_view);
-
                 //清除資料
-                navigationView.getMenu().clear();
-                tvMember = findViewById(R.id.tvMember);
-                tvMoney = findViewById(R.id.tvMoney);
+                tvLogName = findViewById(R.id.tvLogName);
+                tvLogDetal = findViewById(R.id.tvLogDetal);
                 ivmember = findViewById(R.id.ivmember);
 
-                tvMember.setText("先生/小姐");
-                tvMoney.setText("餘額:");
+                //切換清單
+                navigationView.getMenu().clear();
+                tvLogName.setText("歡迎來到SeekFood");
+                tvLogDetal.setText("請先登入會員");
                 ivmember.setImageResource(R.drawable.baseline);
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
+                break;
+
+
+            case R.id.nav_vendor://廠商登入
+                Intent intent2 = new Intent(MainActivity.this, VendorLogin.class);
+                startActivity(intent2);
+                break;
+            case R.id.nav_vendorOut://廠商登出
+
+                preferences.edit()
+                        .putBoolean("login", false)
+                        .putString("vendor_no", " ")
+                        .putString("v_account", " ")
+                        .putString("v_name", " ")
+                        .putString("v_type", " ")
+                        .apply();
+//
+//
+//
+//                //清除資料
+                tvLogName = findViewById(R.id.tvLogName);
+                tvLogDetal = findViewById(R.id.tvLogDetal);
+                ivmember = findViewById(R.id.ivmember);
+//
+                tvLogName.setText("歡迎來到SeekFood");
+                tvLogDetal.setText("請先登入會員");
+                ivmember.setImageResource(R.drawable.baseline);
+                //切換清單
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.activity_main_drawer);
+                break;
+
+            case R.id.nav_gallery:
+                // 切換Fragment或是Activity
+                break;
+            case R.id.nav_manage:
                 break;
         }
 
@@ -280,48 +307,48 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-//showToast(this, "1");
 
-        //判斷是否登入 & 登入廠商 OR 會員
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         SharedPreferences preferences = getSharedPreferences(
                 Util.PREF_FILE, MODE_PRIVATE);
+//判斷是否登入 & 登入廠商 OR 會員
         boolean islogin = preferences.getBoolean("login", false);
+        String mem_no = preferences.getString("mem_no", "");
+        String vendor_no = preferences.getString("vendor_no", "");
+
         if (!islogin) {
             navigationView.inflateMenu(R.menu.activity_main_drawer);
             try {
-//showToast(this, "2");
-                tvMember = findViewById(R.id.tvMember);
-                tvMoney = findViewById(R.id.tvMoney);
+                tvLogName = findViewById(R.id.tvLogName);
+                tvLogDetal = findViewById(R.id.tvLogDetal);
                 ivmember = findViewById(R.id.ivmember);
 
-                tvMember.setText("先生/小姐");
-                tvMoney.setText("餘額:");
+                tvLogName.setText("歡迎來到SeekFood");
+                tvLogDetal.setText("請先登入會員");
                 ivmember.setImageResource(R.drawable.baseline);
             } catch (NullPointerException e) {
                 return;
             }
 
-        } else {
+        } else if (islogin && mem_no.length() >= 7) {
             navigationView.inflateMenu(R.menu.activity_main_login);
             String mem_name = preferences.getString("mem_name", " ");
             String mem_balance = preferences.getString("mem_balance", " ");
             String url = Util.URL + "member/member.do";
-            String mem_no = preferences.getString("mem_no", " ");
             int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
             Bitmap bitmap = null;
             try {
-                tvMember = findViewById(R.id.tvMember);
-                tvMoney = findViewById(R.id.tvMoney);
+                tvLogName = findViewById(R.id.tvLogName);
+                tvLogDetal = findViewById(R.id.tvLogDetal);
                 ivmember = findViewById(R.id.ivmember);
-                tvMember.setText(mem_name + "   先生/小姐");
-                tvMoney.setText("餘額:" + mem_balance + "   元");
+                tvLogName.setText(mem_name + "   先生/小姐");
+                tvLogDetal.setText("餘額:" + mem_balance + "   元");
 
                 //會員頭像
-                bookImageTask = new ImageTask(url, mem_no, imageSize);
+                memberImageTask = new ImageTask(url, "mem_no", mem_no, imageSize);
 
-                bitmap = bookImageTask.execute().get();
+                bitmap = memberImageTask.execute().get();
 
             } catch (ExecutionException e) {
                 Log.e(TAG, e.toString());
@@ -339,9 +366,40 @@ public class MainActivity extends AppCompatActivity
             }
 
 
+        } else if (islogin && vendor_no.length() >= 7) {
+
+            navigationView.inflateMenu(R.menu.activity_main_rest);
+            String v_name = preferences.getString("v_name", " ");
+            String v_type = preferences.getString("v_type", " ");
+            String url = Util.URL + "vendor/vendor.do";
+            int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
+            Bitmap bitmap = null;
+            try {
+                tvLogName = findViewById(R.id.tvLogName);
+                tvLogDetal = findViewById(R.id.tvLogDetal);
+
+                tvLogName.setText("店名 :" + v_name);
+                tvLogDetal.setText("餐廳類型: " + v_type);
+
+                //廠商頭像
+                memberImageTask = new ImageTask(url, "vendor_no", vendor_no, imageSize);
+                bitmap = memberImageTask.execute().get();
+
+            } catch (ExecutionException e) {
+                Log.e(TAG, e.toString());
+            } catch (InterruptedException e) {
+                Log.e(TAG, e.toString());
+            } catch (NullPointerException e) {
+                Log.e(TAG, e.toString());
+                return;
+            }
+
+            if (bitmap != null) {
+                ivmember.setImageBitmap(bitmap);
+            } else {
+                ivmember.setImageResource(R.drawable.default_image);
+            }
         }
-
-
     }
 
 

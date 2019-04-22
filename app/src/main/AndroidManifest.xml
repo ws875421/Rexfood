@@ -34,6 +34,9 @@
         <activity
             android:name=".member.MemberLogin"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".vendor.VendorLogin"
+            android:theme="@style/AppTheme"/>
 
 
     </application>
