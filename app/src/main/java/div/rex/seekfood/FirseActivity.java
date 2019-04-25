@@ -87,8 +87,8 @@ public class FirseActivity extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                     //設定圖示
-//                    .setIcon(R.drawable.alert)
-//                    .setTitle("This is Dialog")
+                    .setIcon(R.drawable.alert)
+                    .setTitle("This is Dialog")
                     //設定訊息內容
                     .setMessage(R.string.message_alert)
                     //設定確認鍵 (positive用於確認)

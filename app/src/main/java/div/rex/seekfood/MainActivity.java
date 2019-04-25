@@ -34,9 +34,11 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import div.rex.seekfood.main.Util;
 import div.rex.seekfood.member.MemberLogin;
 import div.rex.seekfood.task.ImageTask;
 import div.rex.seekfood.vendor.VendorLogin;
+import div.rex.seekfood.vendor.VendorlistFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -48,8 +50,8 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<String> images;
     private ArrayList<String> imageTitle;
     private TextView tvLogName, tvLogDetal;
-    private ImageView ivmember;
-    private ImageTask memberImageTask;
+    private ImageView ivmember ;
+    private ImageTask memberImageTask, vendorImageTask;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -85,18 +87,18 @@ public class MainActivity extends AppCompatActivity
         //初始化view
         initView();
 
-        //
+
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
-        String title = "Dynamic_Fragment B";
-        DynamicFragment fragmentB = new DynamicFragment();
+        VendorlistFragment vendorlist = new VendorlistFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", title);
-        fragmentB.setArguments(bundle);
+        vendorlist.setArguments(bundle);
 
-        transaction.replace(R.id.framLayout, fragmentB, TAG);
+        transaction.replace(R.id.frameLayout, vendorlist, TAG);
         transaction.commit();
+
+
         //
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -116,10 +118,10 @@ public class MainActivity extends AppCompatActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //######
-        mTextMessage = findViewById(R.id.message);
-        mTextMessage.setText(R.string.title_home);
-    }
 
+        mTextMessage.setText(R.string.title_home);
+        tvLogDetal = findViewById(R.id.tvLogDetal);
+    }
 
     private void findView() {
         mBanner = findViewById(R.id.banner);
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity
      * 使用了Glide图片加载框架
      */
     private void initView() {
-        mBanner = findViewById(R.id.banner);
+//        mBanner = findViewById(R.id.banner);
         //设置样式,默认为:Banner.NOT_INDICATOR(不显示指示器和标题)
         //可选样式如下:
         //1. Banner.CIRCLE_INDICATOR    显示圆形指示器
@@ -230,6 +232,17 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_memberOut://會員登出
 
+
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                VendorlistFragment vendorlist = new VendorlistFragment();
+                Bundle bundle = new Bundle();
+                vendorlist.setArguments(bundle);
+
+                transaction.replace(R.id.frameLayout, vendorlist, TAG);
+                transaction.commit();
+
                 preferences.edit()
                         .putBoolean("login", false)
                         .putString("mem_no", " ")
@@ -307,8 +320,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
-        SharedPreferences preferences = getSharedPreferences(
-                Util.PREF_FILE, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
 //判斷是否登入 & 登入廠商 OR 會員
         boolean islogin = preferences.getBoolean("login", false);
         String mem_no = preferences.getString("mem_no", "");
@@ -336,6 +348,7 @@ public class MainActivity extends AppCompatActivity
             String url = Util.URL + "member/member.do";
             int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
             try {
+
                 tvLogName = findViewById(R.id.tvLogName);
                 tvLogDetal = findViewById(R.id.tvLogDetal);
                 ivmember = findViewById(R.id.ivmember);
@@ -362,7 +375,6 @@ public class MainActivity extends AppCompatActivity
                 return;
             }
 
-
         } else if (islogin && vendor_no.length() >= 7) {
 
             navigationView.inflateMenu(R.menu.activity_main_rest);
@@ -370,6 +382,7 @@ public class MainActivity extends AppCompatActivity
             String v_type = preferences.getString("v_type", " ");
             String url = Util.URL + "vendor/vendor.do";
             int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
+
             try {
                 tvLogName = findViewById(R.id.tvLogName);
                 tvLogDetal = findViewById(R.id.tvLogDetal);
@@ -379,8 +392,8 @@ public class MainActivity extends AppCompatActivity
                 tvLogDetal.setText("餐廳類型: " + v_type);
 
                 //廠商頭像
-                memberImageTask = new ImageTask(url, "vendor_no", vendor_no, imageSize);
-                bitmap = memberImageTask.execute().get();
+                vendorImageTask = new ImageTask(url, "vendor_no", vendor_no, imageSize);
+                bitmap = vendorImageTask.execute().get();
                 if (bitmap != null) {
                     ivmember.setImageBitmap(bitmap);
                 } else {
@@ -395,8 +408,6 @@ public class MainActivity extends AppCompatActivity
                 Log.e(TAG, e.toString());
                 return;
             }
-
-
         }
     }
 
@@ -419,8 +430,8 @@ public class MainActivity extends AppCompatActivity
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                     //設定圖示
-//                    .setIcon(R.drawable.alert)
-//                    .setTitle("This is Dialog")
+                    .setIcon(R.drawable.alert)
+                    .setTitle("This is Dialog")
                     //設定訊息內容
                     .setMessage(R.string.message_alert)
                     //設定確認鍵 (positive用於確認)
@@ -444,5 +455,19 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+        if (memberImageTask != null) {
+            memberImageTask.cancel(true);
+        }
+        if (vendorImageTask != null) {
+            vendorImageTask.cancel(true);
+        }
+
     }
 }

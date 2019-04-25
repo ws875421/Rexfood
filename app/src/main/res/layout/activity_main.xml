@@ -27,15 +27,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <FrameLayout
-                android:id="@+id/framLayout"
+                android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="120dp" />
 
 
         </LinearLayout>
+
     </ScrollView>
 
     <include
@@ -49,8 +49,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-         />
+        app:headerLayout="@layout/nav_header_main" />
 
     <!--app:menu="@menu/activity_main_drawer"-->
 </android.support.v4.widget.DrawerLayout>

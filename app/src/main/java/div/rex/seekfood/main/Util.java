@@ -13,7 +13,7 @@ public class Util {
 //    public static String URL = "http://10.0.2.2:8081/BookStoreWeb/";
 //    public static String URL = "http://192.168.1.92:8081/BookStoreWeb/";
     public static String URL = "http://172.20.10.3:8081/CA107G3phone/";
-//    public static String URL = "http://192.168.1.92:8081/CA107G3phone/";
+//    public static String URL = "http://192.168.196.156:8081/CA107G3phone/";
 
 
 

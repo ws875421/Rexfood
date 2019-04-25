@@ -10,9 +10,13 @@
             android:icon="@drawable/notification"
             android:title="通知" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_findorder"
             android:icon="@drawable/document"
             android:title="查詢訂單" />
+        <item
+            android:id="@+id/nav_wpos"
+            android:icon="@drawable/knife"
+            android:title="候位查詢" />
         <item
             android:id="@+id/nav_like"
             android:icon="@drawable/heart"
@@ -23,10 +27,7 @@
             android:icon="@drawable/group"
             android:title="好友聊天" />
 
-        <item
-            android:id="@+id/nav_wpos"
-            android:icon="@drawable/knife"
-            android:title="候位查詢" />
+
     </group>
 
     <item android:title="">

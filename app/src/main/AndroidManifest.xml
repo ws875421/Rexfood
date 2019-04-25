@@ -37,6 +37,10 @@
         <activity
             android:name=".vendor.VendorLogin"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".vendor.VendorDetailActivity"
+            android:theme="@style/AppTheme2"/>
+
 
 
     </application>

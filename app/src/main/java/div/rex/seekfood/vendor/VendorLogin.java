@@ -16,7 +16,7 @@ import div.rex.seekfood.R;
 import div.rex.seekfood.main.Util;
 import div.rex.seekfood.task.CommonTask;
 
-import static div.rex.seekfood.Util.showToast;
+import static div.rex.seekfood.main.Util.showToast;
 
 
 public class VendorLogin extends AppCompatActivity {
@@ -24,7 +24,7 @@ public class VendorLogin extends AppCompatActivity {
     private TextView tvMessage;
     private EditText logtvid, logtvpwd;
     private String v_account, v_pwd;
-    private CommonTask isMemberTask;
+    private CommonTask isVendorTask;
     private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     private VendorVO vendorVO = null;
 
@@ -97,9 +97,9 @@ public class VendorLogin extends AppCompatActivity {
             jsonObject.addProperty("v_account", v_account);
             jsonObject.addProperty("v_pwd", v_pwd);
             String jsonOut = jsonObject.toString();
-            isMemberTask = new CommonTask(url, jsonOut);
+            isVendorTask = new CommonTask(url, jsonOut);
             try {
-                String result = isMemberTask.execute().get();
+                String result = isVendorTask.execute().get();
 
                 if (result.equals("false")) {
                     isVendor = Boolean.valueOf(result);
@@ -125,8 +125,8 @@ public class VendorLogin extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (isMemberTask != null) {
-            isMemberTask.cancel(true);
+        if (isVendorTask != null) {
+            isVendorTask.cancel(true);
         }
     }
 
