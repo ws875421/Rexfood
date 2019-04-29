@@ -1,24 +1,42 @@
 package div.rex.seekfood.vendor;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import div.rex.seekfood.R;
+import div.rex.seekfood.fav_res.Fav_ResVo;
 import div.rex.seekfood.main.Util;
+import div.rex.seekfood.member.MemberLogin;
+import div.rex.seekfood.task.CommonTask;
 import div.rex.seekfood.task.ImageTask;
 import div.rex.seekfood.task.ImageTask2;
+
+import static div.rex.seekfood.main.Util.showToast;
 
 
 public class VendorDetailActivity extends AppCompatActivity {
@@ -29,24 +47,21 @@ public class VendorDetailActivity extends AppCompatActivity {
     private ImageTask2 vendorImageTask2;
     private VendorVO vendorVO;
     private TextView tv_vName, tv_detail;
+    private Button addfav;
+    private CommonTask addTask, initTask;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendordetail);
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+        findView();
 
         vendorVO = (VendorVO) this.getIntent().getSerializableExtra("vendorVO");
         if (vendorVO == null) {
-            Util.showToast(this, "查無餐廳資訊");
+            showToast(this, "查無餐廳資訊");
         }
+
 
         vendorImagesList = getvendorImagesList();
 
@@ -57,9 +72,6 @@ public class VendorDetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
-        tv_vName = findViewById(R.id.tv_vName);
-        tv_detail = findViewById(R.id.tv_detail);
-
         tv_vName.setText(vendorVO.getV_name());
         tv_detail.setText("地址: " + vendorVO.getV_address1() + "" + vendorVO.getV_address2() + "" + vendorVO.getV_address3() + "\n"
                 + "電話: (" + vendorVO.getV_n_code() + ")" + vendorVO.getV_tel() + "\n"
@@ -67,9 +79,162 @@ public class VendorDetailActivity extends AppCompatActivity {
                 + "營業時間: " + vendorVO.getV_start_time() + " - " + vendorVO.getV_end_time() + "\n"
                 + "店家特色: " + vendorVO.getV_text()
         );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<VendorVO> favlist = null;
+        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
+        //判斷是否登入
+        boolean islogin = preferences.getBoolean("login", false);
+        String mem_no = preferences.getString("mem_no", "");
+        String vendor_no = vendorVO.getVendor_no();
+
+        if (islogin && !(mem_no.isEmpty())) {
+
+            if (Util.networkConnected(this)) {
+                try {
+                    String url = Util.URL + "fav_res/fav_res.do";
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("action", "isFav");
+                    jsonObject.addProperty("mem_no", mem_no);
+                    jsonObject.addProperty("vendor_no", vendor_no);
+                    String jsonOut = jsonObject.toString();
+                    initTask = new CommonTask(url, jsonOut);
+                    String jsonIn = initTask.execute().get();
+                    Type listType = new TypeToken<List<Fav_ResVo>>() {
+                    }.getType();
+                    favlist = new Gson().fromJson(jsonIn, listType);
+
+
+                    if (favlist.size() > 0) {
+                        addfav.setText("取消收藏");
+                    } else {
+
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, e.toString());
+                }
+
+            }
+        }
+
+    }
+
+
+    private void doinit() {
 
 
     }
+
+    private void findView() {
+        tv_vName = findViewById(R.id.tv_vName);
+        tv_detail = findViewById(R.id.tv_detail);
+        addfav = findViewById(R.id.addfav);
+
+    }
+
+    //加入收藏
+    public void Onaddfav(View view) {
+        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
+        //判斷是否登入
+        boolean islogin = preferences.getBoolean("login", false);
+        String mem_no = preferences.getString("mem_no", "");
+        String vendor_no = vendorVO.getVendor_no();
+        if (!islogin) {
+
+            AlertFragment alertFragment = new AlertFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            alertFragment.show(fm, "alert");
+        } else if (islogin && mem_no.length()==7) {
+//已登入
+            addRes(mem_no, vendor_no);
+        }
+
+    }
+
+    private void addRes(String mem_no, String vendor_no) {
+
+        if (Util.networkConnected(this) && addfav.getText().equals("加入收藏") ) {
+            String url = Util.URL + "fav_res/fav_res.do";
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("action", "addfav");
+            jsonObject.addProperty("mem_no", mem_no);
+            jsonObject.addProperty("vendor_no", vendor_no);
+            String jsonOut = jsonObject.toString();
+            addTask = new CommonTask(url, jsonOut);
+            try {
+                String result = addTask.execute().get();
+
+                if (Integer.parseInt(result) > 0) {
+                    addfav.setText("取消收藏");
+                } else {
+                    showToast(this, "此餐廳已加入收藏");
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+        } else if (Util.networkConnected(this) && addfav.getText().equals("取消收藏")) {
+
+            String url = Util.URL + "fav_res/fav_res.do";
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("action", "del");
+            jsonObject.addProperty("mem_no", mem_no);
+            jsonObject.addProperty("vendor_no", vendor_no);
+            String jsonOut = jsonObject.toString();
+            addTask = new CommonTask(url, jsonOut);
+            try {
+                String result = addTask.execute().get();
+
+                if (Integer.parseInt(result) > 0) {
+                    addfav.setText("加入收藏");
+                } else {
+                    showToast(this, "發生異常");
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+
+
+        } else {
+            showToast(this, R.string.msg_NoNetwork);
+        }
+
+    }
+
+    //登入會員提示
+    public static class AlertFragment extends DialogFragment implements DialogInterface.OnClickListener {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage("請登入會員")
+                    //設定確認鍵 (positive用於確認)
+                    .setPositiveButton("登入會員", this)
+                    //設定取消鍵 (negative用於取消)
+                    .setNegativeButton("取消", this)
+                    .create();
+            return alertDialog;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    Intent intent = new Intent(this.getContext(), MemberLogin.class);
+                    getActivity().finish();
+                    startActivity(intent);
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    dialog.cancel();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 
     private List<vendorImages> getvendorImagesList() {
 
@@ -126,15 +291,9 @@ public class VendorDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-        finish();
+
 
         if (vendorImageTask2 != null) {
             vendorImageTask2.cancel(true);
@@ -142,6 +301,7 @@ public class VendorDetailActivity extends AppCompatActivity {
         if (vendorImageTask != null) {
             vendorImageTask.cancel(true);
         }
+
     }
 
 }

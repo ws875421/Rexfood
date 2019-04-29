@@ -40,6 +40,9 @@
         <activity
             android:name=".vendor.VendorDetailActivity"
             android:theme="@style/AppTheme2"/>
+        <activity
+            android:name=".fav_res.GetAllFavActivity"
+            android:theme="@style/AppTheme"/>
 
 
 
