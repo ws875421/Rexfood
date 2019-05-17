@@ -17,5 +17,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
-
+    <string name="btn_general">Send Notification</string>
+    <string name="tv_title">標題</string>
+    <string name="tv_content">內文</string>
 </resources>

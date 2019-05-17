@@ -30,11 +30,14 @@ import java.util.concurrent.ExecutionException;
 
 import div.rex.seekfood.R;
 import div.rex.seekfood.fav_res.Fav_ResVo;
+import div.rex.seekfood.main.Holder;
 import div.rex.seekfood.main.Util;
 import div.rex.seekfood.member.MemberLogin;
 import div.rex.seekfood.task.CommonTask;
 import div.rex.seekfood.task.ImageTask;
 import div.rex.seekfood.task.ImageTask2;
+import div.rex.seekfood.wait_pos.ShowPos;
+import div.rex.seekfood.wait_pos.WaitPosActivity;
 
 import static div.rex.seekfood.main.Util.showToast;
 
@@ -123,11 +126,6 @@ public class VendorDetailActivity extends AppCompatActivity {
     }
 
 
-    private void doinit() {
-
-
-    }
-
     private void findView() {
         tv_vName = findViewById(R.id.tv_vName);
         tv_detail = findViewById(R.id.tv_detail);
@@ -147,7 +145,7 @@ public class VendorDetailActivity extends AppCompatActivity {
             AlertFragment alertFragment = new AlertFragment();
             FragmentManager fm = getSupportFragmentManager();
             alertFragment.show(fm, "alert");
-        } else if (islogin && mem_no.length()==7) {
+        } else if (islogin && mem_no.length() == 7) {
 //已登入
             addRes(mem_no, vendor_no);
         }
@@ -156,7 +154,7 @@ public class VendorDetailActivity extends AppCompatActivity {
 
     private void addRes(String mem_no, String vendor_no) {
 
-        if (Util.networkConnected(this) && addfav.getText().equals("加入收藏") ) {
+        if (Util.networkConnected(this) && addfav.getText().equals("加入收藏")) {
             String url = Util.URL + "fav_res/fav_res.do";
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "addfav");
@@ -202,6 +200,44 @@ public class VendorDetailActivity extends AppCompatActivity {
         }
 
     }
+
+
+    //候位
+    public void OnWaitPos(View view) {
+
+        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
+        //判斷是否登入
+        boolean islogin = preferences.getBoolean("login", false);
+        String mem_no = preferences.getString("mem_no", "");
+
+        String vendor_no = vendorVO.getVendor_no();
+        if (!islogin) {
+
+            AlertFragment alertFragment = new AlertFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            alertFragment.show(fm, "alert");
+            return;
+        }
+
+        String posVendor = preferences.getString("posVendor", "");
+        Integer party_size = preferences.getInt("party_size", 0);
+
+        if (posVendor.equals(vendor_no)) {
+            showToast(Holder.getContext(), "您已經在候位了");
+            Intent intent = new Intent(VendorDetailActivity.this, ShowPos.class);
+            intent.putExtra("vendorVO", vendorVO);
+            intent.putExtra("party_size", party_size);
+            finish();
+            startActivity(intent);
+        } else {
+            finish();
+            Intent intent = new Intent(VendorDetailActivity.this, WaitPosActivity.class);
+            intent.putExtra("vendorVO", vendorVO);
+            intent.putExtra("mem_no", mem_no);
+            startActivity(intent);
+        }
+    }
+
 
     //登入會員提示
     public static class AlertFragment extends DialogFragment implements DialogInterface.OnClickListener {

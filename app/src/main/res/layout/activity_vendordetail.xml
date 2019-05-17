@@ -92,6 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginTop="140dp"
+                        android:onClick="OnWaitPos"
                         android:text="候位" />
                 </LinearLayout>
             </LinearLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/ivshowLogo2"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:background="#C0C0C0"
+            android:src="@drawable/default_image" />
+
+        <TextView
+            android:id="@+id/tvshow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="屋馬"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/tvshow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="候位序號:"
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="8dp" />
+        <TextView
+            android:id="@+id/tvshow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="幾人桌:"
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tvshow4"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textSize="100dp"
+                android:background="#FFC107"
+                android:gravity="center"
+                android:text="10" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/cancelPos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:onClick="Oncancel"
+            android:text="取消候位" />
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

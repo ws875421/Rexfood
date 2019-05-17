@@ -75,8 +75,7 @@ public class MemberLogin extends AppCompatActivity {
 //            showToast(this, "74");
 
         } else {
-            SharedPreferences preferences = getSharedPreferences(
-                    Util.PREF_FILE, MODE_PRIVATE);
+            SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
             preferences.edit()
                     .putBoolean("login", true)
                     .putString("mem_no", memberVo.getMem_no())
@@ -123,7 +122,6 @@ public class MemberLogin extends AppCompatActivity {
                     isMember = Boolean.valueOf("true");
 
                 }
-
 //                isMember = Boolean.valueOf(result);
             } catch (Exception e) {
                 Log.e(TAG, e.toString());

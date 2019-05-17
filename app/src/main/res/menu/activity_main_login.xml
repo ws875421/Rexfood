@@ -5,10 +5,10 @@
 
     <group android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/nav_notice"
-            android:icon="@drawable/notification"
-            android:title="通知" />
+        <!--<item-->
+            <!--android:id="@+id/nav_notice"-->
+            <!--android:icon="@drawable/notification"-->
+            <!--android:title="通知" />-->
         <item
             android:id="@+id/nav_findorder"
             android:icon="@drawable/document"

@@ -50,6 +50,17 @@ public class VendorlistFragment extends Fragment {
             3. false代表不要將產生的畫面附加在container上，因為在Activity已經附加過了，就不再多此一舉
         */
         View view = inflater.inflate(R.layout.fragment_vendrolist, container, false);
+
+//        FragmentManager manager2 = getChildFragmentManager();
+//        FragmentTransaction transaction2 = manager2.beginTransaction();
+//        VendorlistFragment VendorSearch = new VendorlistFragment();
+//        Bundle bundle2 = new Bundle();
+//        VendorSearch.setArguments(bundle2);
+//        transaction2.replace(R.id.frameHome, VendorSearch, TAG);
+//        transaction2.commit();
+
+
+
         vendorlist = view.findViewById(R.id.vendorlist);
         vendorlist.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
 

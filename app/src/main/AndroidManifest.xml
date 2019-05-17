@@ -44,6 +44,30 @@
             android:name=".fav_res.GetAllFavActivity"
             android:theme="@style/AppTheme"/>
 
+        <activity
+            android:name=".wait_pos.WaitPosActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".wait_pos.ShowPos"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".chat.FriendsActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".chat.ChatRoomActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".scanner.scannerActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".Test"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ord.FindOrdActicity"
+            android:theme="@style/AppTheme" />
+
 
 
     </application>
