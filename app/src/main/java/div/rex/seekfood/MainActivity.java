@@ -96,33 +96,33 @@ public class MainActivity extends AppCompatActivity
                             transaction.commit();
                             return true;
 
-                        case R.id.navigation_dashboard:
-
-                            //收尋
-//                            FragmentManager manager3 = getSupportFragmentManager();
-//                            FragmentTransaction transaction3 = manager3.beginTransaction();
+//                        case R.id.navigation_dashboard:
 //
-//                            VendorSearch vendorSearch = new VendorSearch();
-//                            Bundle bundle3 = new Bundle();
-//                            vendorSearch.setArguments(bundle3);
+//                            //收尋
+////                            FragmentManager manager3 = getSupportFragmentManager();
+////                            FragmentTransaction transaction3 = manager3.beginTransaction();
+////
+////                            VendorSearch vendorSearch = new VendorSearch();
+////                            Bundle bundle3 = new Bundle();
+////                            vendorSearch.setArguments(bundle3);
+////
+////                            transaction3.replace(R.id.frameHome2, vendorSearch, TAG);
+////                            transaction3.commit();
 //
-//                            transaction3.replace(R.id.frameHome2, vendorSearch, TAG);
-//                            transaction3.commit();
-
-
-                            //餐廳列表
-                            FragmentManager manager2 = getSupportFragmentManager();
-                            FragmentTransaction transaction2 = manager2.beginTransaction();
-
-                            VendorlistFragment vendorlist = new VendorlistFragment();
-                            Bundle bundle2 = new Bundle();
-                            vendorlist.setArguments(bundle2);
-
-                            transaction2.replace(R.id.frameHome, vendorlist, TAG);
-                            transaction2.commit();
-
-
-                            return true;
+//
+//                            //餐廳列表
+//                            FragmentManager manager2 = getSupportFragmentManager();
+//                            FragmentTransaction transaction2 = manager2.beginTransaction();
+//
+//                            VendorlistFragment vendorlist = new VendorlistFragment();
+//                            Bundle bundle2 = new Bundle();
+//                            vendorlist.setArguments(bundle2);
+//
+//                            transaction2.replace(R.id.frameHome, vendorlist, TAG);
+//                            transaction2.commit();
+//
+//
+//                            return true;
 
                     }
                     return false;

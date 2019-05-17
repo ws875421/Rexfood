@@ -101,12 +101,12 @@ public class FragmentHome extends Fragment {
         //所有设置参数方法都放在此方法之前执行
         mBanner.setIndicatorGravity(BannerConfig.CENTER);
         mBanner.setImages(images)
-                .setOnBannerListener(new OnBannerListener() {
-                    @Override
-                    public void OnBannerClick(int position) {
-                        Toast.makeText(getActivity(), "你点了第" + (position + 1) + "张轮播图", Toast.LENGTH_SHORT).show();
-                    }
-                })
+//                .setOnBannerListener(new OnBannerListener() {
+//                    @Override
+//                    public void OnBannerClick(int position) {
+//                        Toast.makeText(getActivity(), "你点了第" + (position + 1) + "张轮播图", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
                 .start();
 
     }
@@ -122,12 +122,12 @@ public class FragmentHome extends Fragment {
         images.add("https://i.imgur.com/M9lA0Rk.jpg");
         //设置图片标题:自动对应
         imageTitle = new ArrayList<>();
-        imageTitle.add("十大星级品牌联盟，全场2折起");
-        imageTitle.add("嗨购5折不要停");
-        imageTitle.add("双12趁现在");
-        imageTitle.add("嗨购5折不要停，12.12趁现在");
-        imageTitle.add("实打实大优惠");
-        imageTitle.add("买到就是赚到");
+        imageTitle.add("101跳樓大拍賣");
+        imageTitle.add("蜂蜜不甜砍頭");
+        imageTitle.add("帝王蟹季");
+        imageTitle.add("下麵給你吃");
+        imageTitle.add("過年大特價");
+        imageTitle.add("蜜汁大鮑魚");
 
     }
 
