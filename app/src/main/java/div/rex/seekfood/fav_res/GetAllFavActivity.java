@@ -45,7 +45,7 @@ public class GetAllFavActivity extends AppCompatActivity {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         StringBuffer s = new StringBuffer();
         List<VendorVO> favlist = null;
-        String url = Util.URL + "fav_res/fav_res.do";
+        String url = Util.URL + "fav_res/fav_res.ad";
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", "getallfav");
         jsonObject.addProperty("mem_no", mem_no);

@@ -61,7 +61,7 @@ public class ShowPos extends AppCompatActivity {
         //圖片
         vendorVO = (VendorVO) this.getIntent().getSerializableExtra("vendorVO");
 
-        String url = Util.URL + "vendor/vendor.do";
+        String url = Util.URL + "vendor/vendor.ad";
         int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
         int party_size = 0;
         SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);

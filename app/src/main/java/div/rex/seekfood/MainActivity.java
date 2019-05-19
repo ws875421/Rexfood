@@ -503,7 +503,7 @@ public class MainActivity extends AppCompatActivity
                 String contents = intent.getStringExtra("SCAN_RESULT");
 
                 if (Util.networkConnected(this)) {
-                    String url = Util.URL + "ord/ord.do";
+                    String url = Util.URL + "ord/ord.ad";
                     String result = null;
                     isOrdTask = new CommonTask(url, contents);
                     try {
@@ -635,7 +635,7 @@ public class MainActivity extends AppCompatActivity
             }
 ///
 
-            String url = Util.URL + "member/member.do";
+            String url = Util.URL + "member/member.ad";
             int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
             try {
 
@@ -670,7 +670,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.inflateMenu(R.menu.activity_main_rest);
             String v_name = preferences.getString("v_name", " ");
             String v_type = preferences.getString("v_type", " ");
-            String url = Util.URL + "vendor/vendor.do";
+            String url = Util.URL + "vendor/vendor.ad";
             int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
 
             try {

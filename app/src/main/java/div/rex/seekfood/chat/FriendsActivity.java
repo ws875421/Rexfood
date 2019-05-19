@@ -72,7 +72,7 @@ public class FriendsActivity extends AppCompatActivity {
         jsonObject.addProperty("action", "getFriend");
         jsonObject.addProperty("mem_no", mem_no);
         String jsonOut = jsonObject.toString();
-        getFriendTask = new CommonTask(Util.URL + "friend_list/friend_list.do", jsonOut);
+        getFriendTask = new CommonTask(Util.URL + "friend_list/friend_list.ad", jsonOut);
 //        List<Friend_ListVo> vendorList = null;
         String jsonIn = null;
         try {
@@ -283,7 +283,7 @@ public class FriendsActivity extends AppCompatActivity {
             jsonObject.addProperty("action", "getName");
             jsonObject.addProperty("mem_no",  fnVO.getFrie_no());
             String jsonOut = jsonObject.toString();
-            getFriendTask = new CommonTask(Util.URL + "friend_list/friend_list.do", jsonOut);
+            getFriendTask = new CommonTask(Util.URL + "friend_list/friend_list.ad", jsonOut);
 //        List<Friend_ListVo> vendorList = null;
             String jsonIn = null;
             try {

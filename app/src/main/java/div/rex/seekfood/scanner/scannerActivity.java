@@ -34,7 +34,7 @@ public class scannerActivity extends AppCompatActivity {
         String result = null;
         //
         if (Util.networkConnected(this)) {
-            String url = Util.URL + "ord/ord.do";
+            String url = Util.URL + "ord/ord.ad";
 
             isOrdTask = new CommonTask(url, contents);
             try {

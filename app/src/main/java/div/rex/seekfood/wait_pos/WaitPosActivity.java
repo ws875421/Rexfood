@@ -84,7 +84,7 @@ public class WaitPosActivity extends AppCompatActivity {
 
         //圖片
         Bitmap bitmap = null;
-        String url = Util.URL + "vendor/vendor.do";
+        String url = Util.URL + "vendor/vendor.ad";
         int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
         vendorImageTask = new ImageTask(url, "vendor_no", vendorVO.getVendor_no(), imageSize);
         ivPosLogo = findViewById(R.id.ivPosLogo);

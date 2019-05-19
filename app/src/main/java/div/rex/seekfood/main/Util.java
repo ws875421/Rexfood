@@ -10,15 +10,20 @@ import android.widget.Toast;
 
 
 public class Util {
-    // 模擬器連Tomcat
+
 
     //    public static String URL = "http://10.0.2.2:8081/BookStoreWeb/";
 //    public static String URL = "http://192.168.1.92:8081/BookStoreWeb/";
 //    public static String URL = "http://172.20.10.3:8081/CA107G3phone/";
-    public static String URL = "http://172.20.10.3:8081/CA107G3phone/";
-    public static final String SERVER_URI = "ws://172.20.10.3:8081/CA107G3phone/FriendWS/";
+    //實體手機
+    public static String URL = "http://172.20.10.3:8081/CA107G3/";
+    public static final String SERVER_URI = "ws://172.20.10.3:8081/CA107G3/FriendWSandroid/";
+    public static final String SERVER_POSURI = "ws://172.20.10.3:8081/CA107G3/MemberWS/";
+    //模擬器
+//    public static String URL = "http://10.0.2.2:8081/CA107G3/";
+//    public static final String SERVER_URI = "ws://10.0.2.2:8081/CA107G3/FriendWSandroid/";
+//    public static final String SERVER_POSURI = "ws://10.0.2.2:8081/CA107G3/MemberWS/";
 
-    public static final String SERVER_POSURI = "ws://172.20.10.3:8081/CA107G3phone/MemberWS/";
 //    public static String URL = "http://10.0.2.2:8081/CA107G3phone/";
 //    public static final String SERVER_URI = "ws://10.0.2.2:8081/CA107G3phone/FriendWS/";
 

@@ -98,7 +98,7 @@ public class VendorDetailActivity extends AppCompatActivity {
 
             if (Util.networkConnected(this)) {
                 try {
-                    String url = Util.URL + "fav_res/fav_res.do";
+                    String url = Util.URL + "fav_res/fav_res.ad";
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("action", "isFav");
                     jsonObject.addProperty("mem_no", mem_no);
@@ -155,7 +155,7 @@ public class VendorDetailActivity extends AppCompatActivity {
     private void addRes(String mem_no, String vendor_no) {
 
         if (Util.networkConnected(this) && addfav.getText().equals("加入收藏")) {
-            String url = Util.URL + "fav_res/fav_res.do";
+            String url = Util.URL + "fav_res/fav_res.ad";
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "addfav");
             jsonObject.addProperty("mem_no", mem_no);
@@ -175,7 +175,7 @@ public class VendorDetailActivity extends AppCompatActivity {
             }
         } else if (Util.networkConnected(this) && addfav.getText().equals("取消收藏")) {
 
-            String url = Util.URL + "fav_res/fav_res.do";
+            String url = Util.URL + "fav_res/fav_res.ad";
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "del");
             jsonObject.addProperty("mem_no", mem_no);
@@ -276,8 +276,8 @@ public class VendorDetailActivity extends AppCompatActivity {
 
         Bitmap bitmap = null;
         Bitmap bitmap2 = null;
-        String url = Util.URL + "vendor/vendor.do";
-        String url2 = Util.URL + "vendor/vendor2.do";
+        String url = Util.URL + "vendor/vendor.ad";
+        String url2 = Util.URL + "vendor/vendor2.ad";
         int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
 
         vendorImageTask = new ImageTask(url, "vendor_no", vendorVO.getVendor_no(), imageSize);

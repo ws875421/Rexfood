@@ -103,7 +103,7 @@ public class MemberLogin extends AppCompatActivity {
     private boolean isMember(final String userId, final String password) {
         boolean isMember = false;
         if (Util.networkConnected(this)) {
-            String url = Util.URL + "member/member.do";
+            String url = Util.URL + "member/member.ad";
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "isMember");
             jsonObject.addProperty("mem_account", userId);

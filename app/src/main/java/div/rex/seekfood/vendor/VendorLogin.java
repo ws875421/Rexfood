@@ -91,7 +91,7 @@ public class VendorLogin extends AppCompatActivity {
     private boolean isVendor(final String v_account, final String v_pwd) {
         boolean isVendor = false;
         if (Util.networkConnected(this)) {
-            String url = Util.URL + "vendor/vendor.do";
+            String url = Util.URL + "vendor/vendor.ad";
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "isVendor");
             jsonObject.addProperty("v_account", v_account);

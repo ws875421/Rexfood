@@ -86,7 +86,7 @@ public class VendorlistFragment extends Fragment {
     }
 
     private void updateUI(String jsonOut) {
-        getVendorTask = new CommonTask(Util.URL + "vendor/vendor.do", jsonOut);
+        getVendorTask = new CommonTask(Util.URL + "vendor/vendor.ad", jsonOut);
         List<VendorVO> vendorList = null;
         try {
             String jsonIn = getVendorTask.execute().get();
@@ -148,7 +148,7 @@ public class VendorlistFragment extends Fragment {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             final VendorVO vendorVO = vendorList.get(position);
-            String url = Util.URL + "vendor/vendor.do";
+            String url = Util.URL + "vendor/vendor.ad";
 
             String vendor_no = vendorVO.getVendor_no();
             VendorImageTask = new ImageTask(url, "vendor_no", vendor_no, imageSize, holder.ivPicture);

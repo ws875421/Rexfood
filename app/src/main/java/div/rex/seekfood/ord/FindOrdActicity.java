@@ -63,7 +63,7 @@ public class FindOrdActicity extends AppCompatActivity {
 
             SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
             mem_no = preferences.getString("mem_no", "");
-            String url = Util.URL + "ord/ord2.do";
+            String url = Util.URL + "ord/ord2.ad";
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "getord");
             jsonObject.addProperty("mem_no", mem_no);
