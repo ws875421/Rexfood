@@ -23,6 +23,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import div.rex.seekfood.R;
+import div.rex.seekfood.main.Holder;
 import div.rex.seekfood.main.Util;
 import div.rex.seekfood.task.CommonTask;
 
@@ -78,6 +79,11 @@ public class FindOrdActicity extends AppCompatActivity {
                 String result = getordTask.execute().get();
 
 //                OrdVO = gson.fromJson(result, OrdVO.class);
+//                showToast(Holder.getContext(),String.valueOf(result.length()));
+                if (result.length() <= 2) {
+                    showToast(Holder.getContext(), "查無訂單資料");
+                    finish();
+                }
 
                 Type collectionType = new TypeToken<List<OrdVO>>() {
                 }.getType();
@@ -91,6 +97,7 @@ public class FindOrdActicity extends AppCompatActivity {
                     vendor_no = vo.getVendor_no();
                     verif_code = vo.getVerif_code();
                 }
+
 
 //                preferences.edit()
 //                        .putString("ord_no", ord_no)
