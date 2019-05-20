@@ -115,10 +115,10 @@ public class FragmentHome extends Fragment {
         //设置图片资源:url或本地资源
         images = new ArrayList<>();
         images.add("https://i.imgur.com/g7JhnfE.jpg");
-        images.add("http://img.zcool.cn/community/018fdb56e1428632f875520f7b67cb.jpg");
-        images.add("http://img.zcool.cn/community/01c8dc56e1428e6ac72531cbaa5f2c.jpg");
-        images.add("http://img.zcool.cn/community/01fda356640b706ac725b2c8b99b08.jpg");
-        images.add("https://i.imgur.com/FgR2Oh8.jpg");
+        images.add("https://i.imgur.com/OBcAxaz.jpg");
+        images.add("https://i.imgur.com/HvJwvve.jpg");
+        images.add("https://i.imgur.com/RHJobkJ.jpg");
+        images.add("https://i.imgur.com/NYhcVNp.jpg");
         images.add("https://i.imgur.com/M9lA0Rk.jpg");
         //设置图片标题:自动对应
         imageTitle = new ArrayList<>();

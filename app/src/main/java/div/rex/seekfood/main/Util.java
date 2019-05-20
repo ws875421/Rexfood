@@ -12,14 +12,21 @@ import android.widget.Toast;
 public class Util {
 
 
-    //    public static String URL = "http://10.0.2.2:8081/BookStoreWeb/";
+//    public static String URL = "http://10.0.2.2:8081/BookStoreWeb/";
 //    public static String URL = "http://192.168.1.92:8081/BookStoreWeb/";
 //    public static String URL = "http://172.20.10.3:8081/CA107G3phone/";
-    //實體手機
-    public static String URL = "http://172.20.10.3:8081/CA107G3/";
-    public static final String SERVER_URI = "ws://172.20.10.3:8081/CA107G3/FriendWSandroid/";
-    public static final String SERVER_POSURI = "ws://172.20.10.3:8081/CA107G3/MemberWS/";
-    //模擬器
+//    實體手機
+//    public static String URL = "http://172.20.10.3:8081/CA107G3/";
+//    public static final String SERVER_URI = "ws://172.20.10.3:8081/CA107G3/FriendWSandroid/";
+//    public static final String SERVER_POSURI = "ws://172.20.10.3:8081/CA107G3/MemberWS/";
+
+//    模擬器
+    public static String URL = "http://10.0.2.2:8081/CA107G3/";
+    public static final String SERVER_URI = "ws://10.0.2.2:8081/CA107G3/FriendWSandroid/";
+    public static final String SERVER_POSURI = "ws://10.0.2.2:8081/CA107G3/MemberWS/";
+
+
+    //學校
 //    public static String URL = "http://10.120.26.7:8081/CA107G3/";
 //    public static final String SERVER_URI = "ws://10.120.26.7:8081/CA107G3/FriendWSandroid/";
 //    public static final String SERVER_POSURI = "ws://10.120.26.7:8081/CA107G3/MemberWS/";
