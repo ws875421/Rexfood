@@ -20,9 +20,10 @@ public class Util {
     public static final String SERVER_URI = "ws://172.20.10.3:8081/CA107G3/FriendWSandroid/";
     public static final String SERVER_POSURI = "ws://172.20.10.3:8081/CA107G3/MemberWS/";
     //模擬器
-//    public static String URL = "http://10.0.2.2:8081/CA107G3/";
-//    public static final String SERVER_URI = "ws://10.0.2.2:8081/CA107G3/FriendWSandroid/";
-//    public static final String SERVER_POSURI = "ws://10.0.2.2:8081/CA107G3/MemberWS/";
+//    public static String URL = "http://10.120.26.7:8081/CA107G3/";
+//    public static final String SERVER_URI = "ws://10.120.26.7:8081/CA107G3/FriendWSandroid/";
+//    public static final String SERVER_POSURI = "ws://10.120.26.7:8081/CA107G3/MemberWS/";
+
 
 //    public static String URL = "http://10.0.2.2:8081/CA107G3phone/";
 //    public static final String SERVER_URI = "ws://10.0.2.2:8081/CA107G3phone/FriendWS/";

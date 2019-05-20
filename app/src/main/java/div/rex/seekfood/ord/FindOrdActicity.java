@@ -92,6 +92,12 @@ public class FindOrdActicity extends AppCompatActivity {
                     verif_code = vo.getVerif_code();
                 }
 
+//                preferences.edit()
+//                        .putString("ord_no", ord_no)
+//                        .putString("ord_vendor_no", vendor_no)
+//                        .apply();
+
+
 //                showToast(this, gson.toJson(List));
 
                 tvord = findViewById(R.id.tvord);

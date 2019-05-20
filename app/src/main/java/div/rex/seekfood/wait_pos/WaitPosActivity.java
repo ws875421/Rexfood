@@ -178,10 +178,13 @@ public class WaitPosActivity extends AppCompatActivity {
 //        MemberVo memberVo = new MemberVo();
 //        memberVo.setMem_no("M000001");
 //        String mem_no = memberVo.getMem_no();
+        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
+        String mem_name = preferences.getString("mem_name", " ");
 
         String url = Util.URL + "wait_pos/wait_pos2.do";
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", "insertPhone");
+        jsonObject.addProperty("mem_name", mem_name);
         jsonObject.addProperty("party_size", party_size);
         jsonObject.addProperty("mem_no", mem_no);
         jsonObject.addProperty("vendor_no", vendor_no);
@@ -215,7 +218,7 @@ public class WaitPosActivity extends AppCompatActivity {
             String WGroup = jsonObject2.get("前面還有幾組人").getAsString();
 
 
-            SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
+//            SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
             preferences.edit()
                     .putString("posVendor", vendorVO.getVendor_no())    //候位餐廳
                     .putString("PosNum", PosNum)                        //候位號碼牌

@@ -170,12 +170,13 @@ public class ChatRoomActivity extends AppCompatActivity {
 
 //
 
-
-                holder.tvMessageL.setText(jsonIn+"："+ctm.getMessage());
+                //對方
+                holder.tvMessageL.setText(ctm.getMessage());
                 holder.cardRight.setVisibility(View.GONE);
                 holder.cardLeft.setVisibility(View.VISIBLE);
             }else{
-                holder.tvMessageR.setText("我："+ctm.getMessage());
+                //我
+                holder.tvMessageR.setText(ctm.getMessage());
                 holder.cardRight.setVisibility(View.VISIBLE);
                 holder.cardLeft.setVisibility(View.GONE);
             }

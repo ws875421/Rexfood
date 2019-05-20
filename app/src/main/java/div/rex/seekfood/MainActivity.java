@@ -32,6 +32,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     private final static String TAG = "fragment";
     private final static String TAG2 = "push";
 
-    private CommonTask isOrdTask;
+    private CommonTask isOrdTask, isOrdTask2;
     private TextView tvLogName, tvLogDetal;
     private ImageView ivmember;
     private ImageTask memberImageTask, vendorImageTask;
@@ -509,15 +511,43 @@ public class MainActivity extends AppCompatActivity
                     try {
 
                         result = isOrdTask.execute().get();
-
+                        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
 
                         if (result.equals("true")) {
+                            //轉至桌位
+
+//                            String ord_no = preferences.getString("ord_no", "");
+//                            String ord_vendor_no = preferences.getString("ord_vendor_no", "");
+//
+//
+//                            String url2 = Util.URL + "ord/ord2.ad";
+//                            JsonObject jsonObject = new JsonObject();
+//                            jsonObject.addProperty("action", "checkok");
+//                            jsonObject.addProperty("ord_no", ord_no);
+//                            jsonObject.addProperty("vendor_no", ord_vendor_no);
+//                            String jsonOut = jsonObject.toString();
+//                            isOrdTask2 = new CommonTask(url2, jsonOut);
+//
+//
+//                            //
+//                            preferences.edit()
+//                                    .putString("ord_no", "")
+//                                    .putString("ord_vendor_no", "")
+//                                    .apply();
+
+
+                            //
                             showToast(Holder.getContext(), "驗證成功");
                             new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("驗證結果")
                                     .setMessage("驗證成功")
                                     .show();
                         } else {
+                            preferences.edit()
+                                    .putString("ord_no", "")
+                                    .putString("ord_vendor_no", "")
+                                    .apply();
+
                             showToast(Holder.getContext(), "驗證失敗");
                             new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("驗證結果")
