@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,18 +28,27 @@ public class MemberLogin extends AppCompatActivity {
     private CommonTask isMemberTask;
     private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     private MemberVo memberVo = null;
+    private Button button3,button5,bmag4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findview();
+
+        button3.setVisibility(View.VISIBLE);
+        button5.setVisibility(View.VISIBLE);
+        bmag4.setVisibility(View.VISIBLE);
     }
 
     private void findview() {
         logtvid = findViewById(R.id.logtvid);
         logtvpwd = findViewById(R.id.logtvpwd);
         tvMessage = findViewById(R.id.tvMessage);
+
+        button3=findViewById(R.id.button3);
+        button5=findViewById(R.id.button5);
+        bmag4=findViewById(R.id.bmag4);
     }
 
     @Override
@@ -70,7 +80,7 @@ public class MemberLogin extends AppCompatActivity {
             return;
         }
 
-        if (! isMember(member_accout, member_pwd)) {
+        if (!isMember(member_accout, member_pwd)) {
             showMessage(R.string.msg_InvalidUserOrPassword);
 //            showToast(this, "74");
 
@@ -145,4 +155,23 @@ public class MemberLogin extends AppCompatActivity {
             isMemberTask.cancel(true);
         }
     }
+
+    public void Onmag1(View v) {
+        logtvid.setText("c123456");
+        logtvpwd.setText("c1234567");
+
+    }
+
+    public void Onmag2(View v) {
+        logtvid.setText("f1234562");
+        logtvpwd.setText("f1234562");
+
+    }
+    public void Onmag3(View v) {
+        logtvid.setText("qq1234");
+        logtvpwd.setText("aa1234");
+
+    }
+
+
 }

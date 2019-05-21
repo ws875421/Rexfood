@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,18 +28,23 @@ public class VendorLogin extends AppCompatActivity {
     private CommonTask isVendorTask;
     private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
     private VendorVO vendorVO = null;
+    private Button butmag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findview();
+
+        butmag.setVisibility(View.VISIBLE);
     }
 
     private void findview() {
         logtvid = findViewById(R.id.logtvid);
         logtvpwd = findViewById(R.id.logtvpwd);
         tvMessage = findViewById(R.id.tvMessage);
+
+        butmag=findViewById(R.id.butmag);
     }
 
     @Override
@@ -128,6 +134,11 @@ public class VendorLogin extends AppCompatActivity {
         if (isVendorTask != null) {
             isVendorTask.cancel(true);
         }
+    }
+
+    public void Onmag(View v) {
+        logtvid.setText("V123456");
+        logtvpwd.setText("V123456");
     }
 
 }
