@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
@@ -74,13 +76,40 @@ public class VendorDetailActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
+//查菜單
+        StringBuffer sb = new StringBuffer();
+        if (Util.networkConnected(this)) {
+            try {
+                String vendor_no = vendorVO.getVendor_no();
+                String url = Util.URL + "vendor/vendor.ad";
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("action", "getmenu");
+                jsonObject.addProperty("vendor_no", vendor_no);
+                String jsonOut = jsonObject.toString();
+                initTask = new CommonTask(url, jsonOut);
+                String jsonIn = initTask.execute().get();
+                Gson gson = new Gson();
+                JsonArray JsonArray = gson.fromJson(jsonIn, JsonArray.class);
+
+                for (JsonElement e : JsonArray) {
+                    JsonObject jsonObject2 = e.getAsJsonObject();
+                    jsonObject2.get("menu_name").getAsString();
+                    sb.append(jsonObject2.get("menu_name").getAsString() + "\n");
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+
+        }
+
 
         tv_vName.setText(vendorVO.getV_name());
         tv_detail.setText("地址: " + vendorVO.getV_address1() + "" + vendorVO.getV_address2() + "" + vendorVO.getV_address3() + "\n"
                 + "電話: (" + vendorVO.getV_n_code() + ")" + vendorVO.getV_tel() + "\n"
                 + "餐廳類型: " + vendorVO.getV_type() + "\n"
                 + "營業時間: " + vendorVO.getV_start_time() + " - " + vendorVO.getV_end_time() + "\n"
-                + "店家特色: " + vendorVO.getV_text()
+                + "店家特色: " + vendorVO.getV_text() + "\n" + "\n" + "菜單:" + "\n" + sb.toString().trim()
         );
     }
 
