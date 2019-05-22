@@ -91,10 +91,16 @@ public class VendorDetailActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 JsonArray JsonArray = gson.fromJson(jsonIn, JsonArray.class);
 
+                int i = 0;
+//                sb.append("菜單:" + "\n");
                 for (JsonElement e : JsonArray) {
+                    if (i == 0) {
+                        sb.append("菜單:" + "\n");
+                    }
                     JsonObject jsonObject2 = e.getAsJsonObject();
                     jsonObject2.get("menu_name").getAsString();
                     sb.append(jsonObject2.get("menu_name").getAsString() + "\n");
+                    i++;
                 }
 
             } catch (Exception e) {
@@ -109,7 +115,7 @@ public class VendorDetailActivity extends AppCompatActivity {
                 + "電話: (" + vendorVO.getV_n_code() + ")" + vendorVO.getV_tel() + "\n"
                 + "餐廳類型: " + vendorVO.getV_type() + "\n"
                 + "營業時間: " + vendorVO.getV_start_time() + " - " + vendorVO.getV_end_time() + "\n"
-                + "店家特色: " + vendorVO.getV_text() + "\n" + "\n" + "菜單:" + "\n" + sb.toString().trim()
+                + "店家特色: " + vendorVO.getV_text() + "\n" + sb.toString().trim()
         );
     }
 
